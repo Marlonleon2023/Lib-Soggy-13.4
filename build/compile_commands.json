@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build",
+  "command": "C:\\Android\\ndk\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DSoggy_EXPORTS -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/Soggy\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/PVZ2\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/../And64Inline\" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC -o CMakeFiles\\Soggy.dir\\And64Inline\\And64InlineHook.cpp.o -c \"C:\\Users\\Marlon Leon\\Downloads\\Soggylib-13.4-main\\Soggylib-13.4-main\\And64Inline\\And64InlineHook.cpp\"",
+  "file": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/And64Inline/And64InlineHook.cpp",
+  "output": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build/CMakeFiles/Soggy.dir/And64Inline/And64InlineHook.cpp.o"
+},
+{
+  "directory": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build",
+  "command": "C:\\Android\\ndk\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DSoggy_EXPORTS -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/Soggy\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/PVZ2\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/../And64Inline\" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC -o CMakeFiles\\Soggy.dir\\PVZ2Soggy.cpp.o -c \"C:\\Users\\Marlon Leon\\Downloads\\Soggylib-13.4-main\\Soggylib-13.4-main\\PVZ2Soggy.cpp\"",
+  "file": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/PVZ2Soggy.cpp",
+  "output": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build/CMakeFiles/Soggy.dir/PVZ2Soggy.cpp.o"
+},
+{
+  "directory": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build",
+  "command": "C:\\Android\\ndk\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DSoggy_EXPORTS -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/Soggy\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/PVZ2\" -I\"C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/../And64Inline\" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC -o CMakeFiles\\Soggy.dir\\memUtils.cpp.o -c \"C:\\Users\\Marlon Leon\\Downloads\\Soggylib-13.4-main\\Soggylib-13.4-main\\memUtils.cpp\"",
+  "file": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/memUtils.cpp",
+  "output": "C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build/CMakeFiles/Soggy.dir/memUtils.cpp.o"
+}
+]

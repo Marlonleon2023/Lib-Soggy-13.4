@@ -1,0 +1,3 @@
+C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build/CMakeFiles/Soggy.dir
+C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build/CMakeFiles/edit_cache.dir
+C:/Users/Marlon Leon/Downloads/Soggylib-13.4-main/Soggylib-13.4-main/build/CMakeFiles/rebuild_cache.dir

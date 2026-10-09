@@ -1,4 +1,4 @@
-# Soggylib (12.2 edition!!!!)
+# Soggylib (13.4 edition!!!!)
 
 ## NOTE: I won't updating this repository because I don't lib hypermodern, go do smth with yourself
 
@@ -49,7 +49,7 @@ Output: `libSoggy.so`
 
 # Target
 
-PvZ2 **12.2** (ARM64).
+PvZ2 **13.4** (ARM64).
 
 Got a different version? Cool. Update `offsets.h` yourself. good luck
 

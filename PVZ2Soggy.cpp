@@ -163,6 +163,10 @@ static constexpr uintptr_t BOARD_STATE_PLAYING = 1;
 static constexpr int EXTRA_LEFT_OFFSET = -20;
 
 // Aplica la corrección de cámara full-lawn al board.
+// SOLO establece los objetivos de pan (b270, b284, b285, b280).
+// NO toca b17 (BOARD_CAM_RENDER_X) para permitir que la animación
+// de entrada del juego (selector semillas -> partida) sea suave.
+// La cámara animará naturalmente hacia estos objetivos.
 static void ApplyFullLawnCamera(uintptr_t board) {
     // Full lawn (vista ancha): escala 1.0 + alineación izquierda del tablero.
     //
@@ -182,25 +186,20 @@ static void ApplyFullLawnCamera(uintptr_t board) {
     // hkBoardLayout y el módulo de vista de lzt, ya validadas en 9.6.1/9.8.1):
     //   b270 = b284 = -b283  (en vanilla b284 = b270 = 0 => franja izquierda)
     //   b285 = (b283+b286)/2 (pan de selección de tarjetas centrado)
-    *(int*)(board + BOARD_270) = -b283;
-    *(int*)(board + BOARD_284) = -b283;
-    *(int*)(board + BOARD_285) = (b283 + b286) / 2;
+    // Añadimos EXTRA_LEFT_OFFSET a los objetivos para mover más a la izquierda.
+    int targetPan = -b283 + EXTRA_LEFT_OFFSET;
+    *(int*)(board + BOARD_270) = targetPan;
+    *(int*)(board + BOARD_284) = targetPan;
+    *(int*)(board + BOARD_285) = (b283 + b286) / 2 + EXTRA_LEFT_OFFSET;
 
-    // Efecto INMEDIATO sobre el render (Board+0x44 = b17, offset de cámara
-    // en PX; con escala 1.0: pantalla = mundo - b17, ver sub_153EC84).
-    // Sin esta línea los objetivos anteriores solo surtirían efecto en el
-    // SIGUIENTE pan de cámara; con ella el tablero queda alineado ya.
-    // (Si se prefiere preservar las animaciones de pan del juego, basta con
-    //  eliminar esta línea: los valores de b270/b284/b285 de arriba hacen el
-    //  alineado en el próximo pan; el touch sigue alineado porque el
-    //  conversor sub_153EC84 usa el mismo b17.)
-    // Añadimos EXTRA_LEFT_OFFSET para mover un poco más a la izquierda.
-    *(int*)(board + BOARD_CAM_RENDER_X) = -b283 + EXTRA_LEFT_OFFSET;
+    // NOTA: No escribimos BOARD_CAM_RENDER_X (b17) aquí.
+    // El juego anima b17 hacia b270/b284 via sub_11E492C/sub_144ACF0.
+    // Forzar b17 inmediato rompe la animación de entrada (selector->partida).
 }
 
 // Igual que el .so original: BoardChangeState solo loguea y reenvía.
-// El parche de cámara va en BoardRender (cada frame), si no el juego lo sobrescribe.
-// También aplicamos aquí para suavizar la transición selector->partida.
+// También aplicamos los objetivos de pan aquí para que estén listos
+// antes de que empiece la animación de entrada a la partida.
 static long hkBoardChangeState(uintptr_t board, uintptr_t newState) {
     LOGI("=== BoardChangeState board=%p state=%lu ===",
          (void*)board, (unsigned long)newState);

@@ -159,11 +159,55 @@ static long hkDispatch(uintptr_t a1, uintptr_t a2,
 
 static constexpr uintptr_t BOARD_STATE_PLAYING = 1;
 
-// Igual que el .so original: BoardChangeState solo loguea y reenvia.
-// El parche de camara va en BoardRender (cada frame), si no el juego lo sobrescribe.
+// Offset extra hacia la izquierda (px). Negativo = más a la izquierda.
+static constexpr int EXTRA_LEFT_OFFSET = -20;
+
+// Aplica la corrección de cámara full-lawn al board.
+static void ApplyFullLawnCamera(uintptr_t board) {
+    // Full lawn (vista ancha): escala 1.0 + alineación izquierda del tablero.
+    //
+    // Escala (b280): igual que el hook post-BoardZoom2 de Soggylib 9.6.1.
+    *(float*)(board + BOARD_280) = 1.0f;
+
+    // b283 = offset de alineación en PX, NEGATIVO (ApplyZoom escribe
+    //   b283 = escala * (-propiedadA) con propiedadA > 0; ver sub_1528B9C).
+    // -b283 = px que hay que desplazar el tablero a la IZQUIERDA para que su
+    //   borde izquierdo quede en x=0 de pantalla (left-align). Es el mismo
+    //   objetivo que el juego usa internamente (caso dir0 de la tabla de
+    //   direcciones sub_144ACF0 = mostrar la parte derecha del césped).
+    int b283 = *(int*)(board + BOARD_283);
+    int b286 = *(int*)(board + BOARD_286);
+
+    // Objetivos de pan en reposo (mismas fórmulas que Soggylib 9.6.1
+    // hkBoardLayout y el módulo de vista de lzt, ya validadas en 9.6.1/9.8.1):
+    //   b270 = b284 = -b283  (en vanilla b284 = b270 = 0 => franja izquierda)
+    //   b285 = (b283+b286)/2 (pan de selección de tarjetas centrado)
+    *(int*)(board + BOARD_270) = -b283;
+    *(int*)(board + BOARD_284) = -b283;
+    *(int*)(board + BOARD_285) = (b283 + b286) / 2;
+
+    // Efecto INMEDIATO sobre el render (Board+0x44 = b17, offset de cámara
+    // en PX; con escala 1.0: pantalla = mundo - b17, ver sub_153EC84).
+    // Sin esta línea los objetivos anteriores solo surtirían efecto en el
+    // SIGUIENTE pan de cámara; con ella el tablero queda alineado ya.
+    // (Si se prefiere preservar las animaciones de pan del juego, basta con
+    //  eliminar esta línea: los valores de b270/b284/b285 de arriba hacen el
+    //  alineado en el próximo pan; el touch sigue alineado porque el
+    //  conversor sub_153EC84 usa el mismo b17.)
+    // Añadimos EXTRA_LEFT_OFFSET para mover un poco más a la izquierda.
+    *(int*)(board + BOARD_CAM_RENDER_X) = -b283 + EXTRA_LEFT_OFFSET;
+}
+
+// Igual que el .so original: BoardChangeState solo loguea y reenvía.
+// El parche de cámara va en BoardRender (cada frame), si no el juego lo sobrescribe.
+// También aplicamos aquí para suavizar la transición selector->partida.
 static long hkBoardChangeState(uintptr_t board, uintptr_t newState) {
     LOGI("=== BoardChangeState board=%p state=%lu ===",
          (void*)board, (unsigned long)newState);
+
+    if (getHighView()) {
+        ApplyFullLawnCamera(board);
+    }
 
     return oBoardChangeState ? oBoardChangeState(board, newState) : 0;
 }
@@ -173,37 +217,7 @@ static long hkBoardRender(uintptr_t board, uintptr_t a2) {
         return oBoardRender ? oBoardRender(board, a2) : 0;
     }
 
-    // Full lawn (vista ancha): escala 1.0 + alineacion izquierda del tablero.
-    //
-    // Escala (b280): igual que el hook post-BoardZoom2 de Soggylib 9.6.1.
-    *(float*)(board + BOARD_280) = 1.0f;
-
-    // b283 = offset de alineacion en PX, NEGATIVO (ApplyZoom escribe
-    //   b283 = escala * (-propiedadA) con propiedadA > 0; ver sub_1528B9C).
-    // -b283 = px que hay que desplazar el tablero a la IZQUIERDA para que su
-    //   borde izquierdo quede en x=0 de pantalla (left-align). Es el mismo
-    //   objetivo que el juego usa internamente (caso dir0 de la tabla de
-    //   direcciones sub_144ACF0 = mostrar la parte derecha del cesped).
-    int b283 = *(int*)(board + BOARD_283);
-    int b286 = *(int*)(board + BOARD_286);
-
-    // Objetivos de pan en reposo (mismas formulas que Soggylib 9.6.1
-    // hkBoardLayout y el modulo de vista de lzt, ya validadas en 9.6.1/9.8.1):
-    //   b270 = b284 = -b283  (en vanilla b284 = b270 = 0 => franja izquierda)
-    //   b285 = (b283+b286)/2 (pan de seleccion de tarjetas centrado)
-    *(int*)(board + BOARD_270) = -b283;
-    *(int*)(board + BOARD_284) = -b283;
-    *(int*)(board + BOARD_285) = (b283 + b286) / 2;
-
-    // Efecto INMEDIATO sobre el render (Board+0x44 = b17, offset de camara
-    // en PX; con escala 1.0: pantalla = mundo - b17, ver sub_153EC84).
-    // Sin esta linea los objetivos anteriores solo surtirian efecto en el
-    // SIGUIENTE pan de camara; con ella el tablero queda alineado ya.
-    // (Si se prefiere preservar las animaciones de pan del juego, basta con
-    //  eliminar esta linea: los valores de b270/b284/b285 de arriba hacen el
-    //  alineado en el proximo pan; el touch sigue alineado porque el
-    //  conversor sub_153EC84 usa el mismo b17.)
-    *(int*)(board + BOARD_CAM_RENDER_X) = -b283;
+    ApplyFullLawnCamera(board);
 
     return oBoardRender ? oBoardRender(board, a2) : 0;
 }

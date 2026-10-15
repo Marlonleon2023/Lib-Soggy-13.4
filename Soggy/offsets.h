@@ -44,6 +44,13 @@ constexpr uintptr_t BOARD_286                  = 1128;   // 0x468 b286 (int, anc
 // Escala PPU (float). El mod SI la fuerza a 1.0 (full lawn).
 constexpr uintptr_t BOARD_280                  = 1104;   // 0x450 b280 (float)
 
+// b17: offset de camara de render en PX (0x44; b18 = 0x48 es el Y).
+// Con escala 1.0: pantalla = mundo - b17 (ver sub_153EC84; el mismo b17 se
+// usa en el touch, asi que forzarlo mantiene el touch alineado).
+// Escrito por las acciones de pan (0x12FC2xx) y por el layout (0x152DA70).
+constexpr uintptr_t BOARD_CAM_RENDER_X          = 68;     // 0x44 b17 (int)
+constexpr uintptr_t BOARD_CAM_RENDER_Y          = 72;     // 0x48 b18 (int)
+
 // Entradas del transform de render (float), calculadas por Zoom2 (sub_152DE68).
 // Con escala=1.0 se cancelan en la formula de render; el mod NO debe escribirlas.
 constexpr uintptr_t BOARD_TRANSFORM_X          = 1108;   // 0x454 b281 (float)

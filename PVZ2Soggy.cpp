@@ -173,29 +173,37 @@ static long hkBoardRender(uintptr_t board, uintptr_t a2) {
         return oBoardRender ? oBoardRender(board, a2) : 0;
     }
 
-    // Full lawn (vista ancha): UNICAMENTE se fuerza la escala de zoom a 1.0,
-    // igual que el hook post-BoardZoom2 de Soggylib 9.6.1 (hkBoardZoom) y el
-    // modulo de vista del proyecto lzt de referencia.
+    // Full lawn (vista ancha): escala 1.0 + alineacion izquierda del tablero.
     //
-    // NO se tocan los demas campos de camara. Analisis de libPVZ2.so 13.4
-    // (ARM64, verificado por desensamblado en crudo):
-    //  - Board+1104 (b280)  : escala PPU (float). sub_152DE68 (Zoom2) la
-    //    calcula en el layout; sub_1544D5C (BoardRender) la usa al final.
-    //  - Board+1108/1112 (b281/b282): entradas del transform de render.
-    //    sub_153EC84 demuestra la formula:
-    //      pantalla = b281 + escala * (mundo - b281 + b17)
-    //    Con escala = 1.0 (full lawn) b281/b282 se cancelan, pero ademas
-    //    el juego los calcula en sub_152DE68: sobrescribirlos con -b283
-    //    (como hacia este hook) no hacia nada correcto.
-    //  - Board+1064/1120/1124 (b270/b284/b285): objetivos de pan de camara.
-    //    La tabla de direcciones sub_144ACF0 y el limitador sub_11E492C los
-    //    leen para fijar la posicion en reposo de camara, que se refleja en
-    //    b17 (Board+0x44, offset de render). En vanilla b284 = b270 = 0;
-    //    escribir b284 = -b283 cada frame desplazaba el tablero ~A px hacia
-    //    la derecha => franja vacia a la izquierda del campo.
-    //  Los calcula el propio juego (ApplyZoom embebido en sub_1528B9C /
-    //    sub_152DABC y Zoom2 sub_152DE68), asi que se les deja intactos.
+    // Escala (b280): igual que el hook post-BoardZoom2 de Soggylib 9.6.1.
     *(float*)(board + BOARD_280) = 1.0f;
+
+    // b283 = offset de alineacion en PX, NEGATIVO (ApplyZoom escribe
+    //   b283 = escala * (-propiedadA) con propiedadA > 0; ver sub_1528B9C).
+    // -b283 = px que hay que desplazar el tablero a la IZQUIERDA para que su
+    //   borde izquierdo quede en x=0 de pantalla (left-align). Es el mismo
+    //   objetivo que el juego usa internamente (caso dir0 de la tabla de
+    //   direcciones sub_144ACF0 = mostrar la parte derecha del cesped).
+    int b283 = *(int*)(board + BOARD_283);
+    int b286 = *(int*)(board + BOARD_286);
+
+    // Objetivos de pan en reposo (mismas formulas que Soggylib 9.6.1
+    // hkBoardLayout y el modulo de vista de lzt, ya validadas en 9.6.1/9.8.1):
+    //   b270 = b284 = -b283  (en vanilla b284 = b270 = 0 => franja izquierda)
+    //   b285 = (b283+b286)/2 (pan de seleccion de tarjetas centrado)
+    *(int*)(board + BOARD_270) = -b283;
+    *(int*)(board + BOARD_284) = -b283;
+    *(int*)(board + BOARD_285) = (b283 + b286) / 2;
+
+    // Efecto INMEDIATO sobre el render (Board+0x44 = b17, offset de camara
+    // en PX; con escala 1.0: pantalla = mundo - b17, ver sub_153EC84).
+    // Sin esta linea los objetivos anteriores solo surtirian efecto en el
+    // SIGUIENTE pan de camara; con ella el tablero queda alineado ya.
+    // (Si se prefiere preservar las animaciones de pan del juego, basta con
+    //  eliminar esta linea: los valores de b270/b284/b285 de arriba hacen el
+    //  alineado en el proximo pan; el touch sigue alineado porque el
+    //  conversor sub_153EC84 usa el mismo b17.)
+    *(int*)(board + BOARD_CAM_RENDER_X) = -b283;
 
     return oBoardRender ? oBoardRender(board, a2) : 0;
 }

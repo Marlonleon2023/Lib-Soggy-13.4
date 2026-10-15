@@ -45,6 +45,9 @@ CMAKE_CXX_COMPILER_AR:FILEPATH=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x
 //`clang-scan-deps` dependency scanner
 CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS:FILEPATH=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/bin/clang-scan-deps.exe
 
+//No help, variable specified on the command line.
+CMAKE_CXX_COMPILER_LAUNCHER:UNINITIALIZED=ccache
+
 //Generate index for LLVM archive
 CMAKE_CXX_COMPILER_RANLIB:FILEPATH=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-ranlib.exe
 
@@ -71,6 +74,9 @@ CMAKE_C_COMPILER_AR:FILEPATH=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86
 
 //`clang-scan-deps` dependency scanner
 CMAKE_C_COMPILER_CLANG_SCAN_DEPS:FILEPATH=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/bin/clang-scan-deps.exe
+
+//No help, variable specified on the command line.
+CMAKE_C_COMPILER_LAUNCHER:UNINITIALIZED=ccache
 
 //Generate index for LLVM archive
 CMAKE_C_COMPILER_RANLIB:FILEPATH=C:/Android/ndk/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-ranlib.exe

@@ -1,25 +1,16 @@
-# Soggylib (13.4 edition!!!!)
+# Hexius (13.4 edition)
 
-## NOTE: I won't updating this repository because I don't lib hypermodern, go do smth with yourself
-
-A shared library for **Plants vs. Zombies 2** modding. (64-bit ONLY!!!!!)
-Yes, another one. No, this one's actually good.
-
-This library is used in **Plants vs Zombies 2 Tiempos Dificiles**, A mod that I totally didn't get gunned to my head. (joke, just helping levet)
-
----
-
-# Features
+## Features
 
 - **Full lawn (wide view)** toggle in Settings - see more lawn. (add widescreen fix yourself tho)
-- Custom tab in settings (Go find uses yourself) and it's customizable!
-- Hide worldmap path will not be included
+- Custom tab in settings and it's customizable!
+- Camera stays away from lawnmowers on the left side when starting a match
 
 ---
 
 # Build
 
-Uses **CMake**. (Surprise hah.)
+Uses **CMake**.
 
 Just run `build.bat`. If it explodes, you're probably missing:
 
@@ -28,22 +19,22 @@ Just run `build.bat`. If it explodes, you're probably missing:
 - Ninja
 - Patience
 
-Output: `libSoggy.so`
+Output: `libHexius.so`
 
 ---
 
 # Usage
 
-1. Yeet `libSoggy.so` into your APK's `lib/arm64-v8a/` folder (make sure to delete armeabi-v7a)
+1. Yeet `libHexius.so` into your APK's `lib/arm64-v8a/` folder (make sure to delete armeabi-v7a)
 2. Paste this code in `smali_classes5\com\popcap\PvZ2\PvZ2GameActivity`
    ```
    .line 57
     invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
 
-    const-string v0, "Soggy"
+    const-string v0, "Hexius"
    ```
-4. Launch the game
-5. Figure out the feature
+3. Launch the game
+4. Enable "Full lawn (wide view)" in Settings
 
 ---
 
@@ -63,7 +54,7 @@ Got a different version? Cool. Update `offsets.h` yourself. good luck
 
 # Credits
 
-- **[Soggylib](https://github.com/aasu-rel/Soggylib)** - Me obviously
+- **[Soggylib](https://github.com/aasu-rel/Soggylib)** - Me obviously (base library)
 - **[And64InlineHook](https://github.com/rprop/and64inlinehook)** - Rprop
 - **[Blazey's Example Mod](https://github.com/BlazeyLol/PVZ2ExpansionMod)** - Original repo for 9.6.1 libbing
 - **[Plants vs Zombie discord (not offical one)](https://discord.gg/pvz)** - Awesome community

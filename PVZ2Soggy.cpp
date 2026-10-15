@@ -162,6 +162,7 @@ static constexpr uintptr_t BOARD_STATE_PLAYING = 1;
 // Offset extra hacia la izquierda (px). POSITIVO = más pan target a la izquierda
 // (porque pantalla = mundo - b17; b17 positivo => cámara se mueve a la izquierda).
 // Ajusta este valor según necesites (ej: 200-400).
+// 300: mantiene cámara lejos de las podadoras al iniciar partida.
 static constexpr int EXTRA_LEFT_PAN = 300;
 
 // Aplica la corrección de cámara full-lawn al board.
@@ -251,7 +252,7 @@ static void ApplyHooks() {
     PVZ2HookFunction(OFF_BoardRender,       (void*)hkBoardRender,      (void**)&oBoardRender);
     PVZ2HookFunction(OFF_BoardChangeState,  (void*)hkBoardChangeState, (void**)&oBoardChangeState);
 
-    LOGI("Soggylib hookde");
+    LOGI("Hexius hookde");
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM*, void*) {

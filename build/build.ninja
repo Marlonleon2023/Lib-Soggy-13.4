@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: Soggy
+# Project: Hexius
 # Configurations: Release
 # =============================================================================
 
@@ -41,69 +41,69 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/build/
 # =============================================================================
-# Object build statements for SHARED_LIBRARY target Soggy
+# Object build statements for SHARED_LIBRARY target Hexius
 
 
 #############################################
-# Order-only phony target for Soggy
+# Order-only phony target for Hexius
 
-build cmake_object_order_depends_target_Soggy: phony || .
+build cmake_object_order_depends_target_Hexius: phony || .
 
-build CMakeFiles/Soggy.dir/And64Inline/And64InlineHook.cpp.o: CXX_COMPILER__Soggy_unscanned_Release C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/And64Inline/And64InlineHook.cpp || cmake_object_order_depends_target_Soggy
+build CMakeFiles/Hexius.dir/And64Inline/And64InlineHook.cpp.o: CXX_COMPILER__Hexius_unscanned_Release C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/And64Inline/And64InlineHook.cpp || cmake_object_order_depends_target_Hexius
   CONFIG = Release
-  DEFINES = -DSoggy_EXPORTS
-  DEP_FILE = CMakeFiles\Soggy.dir\And64Inline\And64InlineHook.cpp.o.d
+  DEFINES = -DHexius_EXPORTS
+  DEP_FILE = CMakeFiles\Hexius.dir\And64Inline\And64InlineHook.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC
   INCLUDES = -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/Soggy" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/PVZ2" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/../And64Inline"
   LAUNCHER = ccache 
-  OBJECT_DIR = CMakeFiles\Soggy.dir
-  OBJECT_FILE_DIR = CMakeFiles\Soggy.dir\And64Inline
-  TARGET_SUPPORT_DIR = CMakeFiles\Soggy.dir
+  OBJECT_DIR = CMakeFiles\Hexius.dir
+  OBJECT_FILE_DIR = CMakeFiles\Hexius.dir\And64Inline
+  TARGET_SUPPORT_DIR = CMakeFiles\Hexius.dir
 
-build CMakeFiles/Soggy.dir/PVZ2Soggy.cpp.o: CXX_COMPILER__Soggy_unscanned_Release C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/PVZ2Soggy.cpp || cmake_object_order_depends_target_Soggy
+build CMakeFiles/Hexius.dir/PVZ2Soggy.cpp.o: CXX_COMPILER__Hexius_unscanned_Release C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/PVZ2Soggy.cpp || cmake_object_order_depends_target_Hexius
   CONFIG = Release
-  DEFINES = -DSoggy_EXPORTS
-  DEP_FILE = CMakeFiles\Soggy.dir\PVZ2Soggy.cpp.o.d
+  DEFINES = -DHexius_EXPORTS
+  DEP_FILE = CMakeFiles\Hexius.dir\PVZ2Soggy.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC
   INCLUDES = -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/Soggy" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/PVZ2" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/../And64Inline"
   LAUNCHER = ccache 
-  OBJECT_DIR = CMakeFiles\Soggy.dir
-  OBJECT_FILE_DIR = CMakeFiles\Soggy.dir
-  TARGET_SUPPORT_DIR = CMakeFiles\Soggy.dir
+  OBJECT_DIR = CMakeFiles\Hexius.dir
+  OBJECT_FILE_DIR = CMakeFiles\Hexius.dir
+  TARGET_SUPPORT_DIR = CMakeFiles\Hexius.dir
 
-build CMakeFiles/Soggy.dir/memUtils.cpp.o: CXX_COMPILER__Soggy_unscanned_Release C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/memUtils.cpp || cmake_object_order_depends_target_Soggy
+build CMakeFiles/Hexius.dir/memUtils.cpp.o: CXX_COMPILER__Hexius_unscanned_Release C$:/Users/Marlon$ Leon/Downloads/LIB$ pvz2$ .so/Lib-Soggy-13.4-main/memUtils.cpp || cmake_object_order_depends_target_Hexius
   CONFIG = Release
-  DEFINES = -DSoggy_EXPORTS
-  DEP_FILE = CMakeFiles\Soggy.dir\memUtils.cpp.o.d
+  DEFINES = -DHexius_EXPORTS
+  DEP_FILE = CMakeFiles\Hexius.dir\memUtils.cpp.o.d
   FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC
   INCLUDES = -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/Soggy" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/PVZ2" -I"C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/../And64Inline"
   LAUNCHER = ccache 
-  OBJECT_DIR = CMakeFiles\Soggy.dir
-  OBJECT_FILE_DIR = CMakeFiles\Soggy.dir
-  TARGET_SUPPORT_DIR = CMakeFiles\Soggy.dir
+  OBJECT_DIR = CMakeFiles\Hexius.dir
+  OBJECT_FILE_DIR = CMakeFiles\Hexius.dir
+  TARGET_SUPPORT_DIR = CMakeFiles\Hexius.dir
 
 
 # =============================================================================
-# Link build statements for SHARED_LIBRARY target Soggy
+# Link build statements for SHARED_LIBRARY target Hexius
 
 
 #############################################
-# Link the shared library libSoggy.so
+# Link the shared library libHexius.so
 
-build libSoggy.so: CXX_SHARED_LIBRARY_LINKER__Soggy_Release CMakeFiles/Soggy.dir/And64Inline/And64InlineHook.cpp.o CMakeFiles/Soggy.dir/PVZ2Soggy.cpp.o CMakeFiles/Soggy.dir/memUtils.cpp.o
+build libHexius.so: CXX_SHARED_LIBRARY_LINKER__Hexius_Release CMakeFiles/Hexius.dir/And64Inline/And64InlineHook.cpp.o CMakeFiles/Hexius.dir/PVZ2Soggy.cpp.o CMakeFiles/Hexius.dir/memUtils.cpp.o
   CONFIG = Release
-  DEP_FILE = CMakeFiles\Soggy.dir\link.d
+  DEP_FILE = CMakeFiles\Hexius.dir\link.d
   LANGUAGE_COMPILE_FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG
-  LINK_FLAGS = -shared -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments  -Wl,--gc-sections  -Xlinker --dependency-file=CMakeFiles\Soggy.dir\link.d
+  LINK_FLAGS = -shared -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments  -Wl,--gc-sections  -Xlinker --dependency-file=CMakeFiles\Hexius.dir\link.d
   LINK_LIBRARIES = -llog  -ldl  -latomic -lm
-  OBJECT_DIR = CMakeFiles\Soggy.dir
+  OBJECT_DIR = CMakeFiles\Hexius.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  SONAME = libSoggy.so
+  SONAME = libHexius.so
   SONAME_FLAG = -Wl,-soname,
-  TARGET_FILE = libSoggy.so
-  TARGET_PDB = Soggy.so.dbg
-  TARGET_SUPPORT_DIR = CMakeFiles\Soggy.dir
+  TARGET_FILE = libHexius.so
+  TARGET_PDB = Hexius.so.dbg
+  TARGET_SUPPORT_DIR = CMakeFiles\Hexius.dir
 
 
 #############################################
@@ -132,7 +132,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build Soggy: phony libSoggy.so
+build Hexius: phony libHexius.so
 
 # =============================================================================
 # Folder targets.
@@ -142,7 +142,7 @@ build Soggy: phony libSoggy.so
 #############################################
 # Folder: C:/Users/Marlon Leon/Downloads/LIB pvz2 .so/Lib-Soggy-13.4-main/build
 
-build all: phony libSoggy.so
+build all: phony libHexius.so
 
 # =============================================================================
 # Built-in targets

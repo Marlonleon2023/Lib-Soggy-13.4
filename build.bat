@@ -34,7 +34,7 @@ if %BUILD_ERR% GTR 1 (
 )
 
 echo [3/3] Stripping + copying .so files...
-"%NDK_PATH%/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-strip.exe" --strip-all build\libSoggy.so
+"%NDK_PATH%/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-strip.exe" --strip-all build\libHexius.so
 robocopy "build\lib" "%OUTPUT_DIR%" *.so /njh /njs /ndl /nc /ns >nul
 robocopy "build" "%OUTPUT_DIR%" *.so /s /njh /njs /ndl /nc /ns >nul
 

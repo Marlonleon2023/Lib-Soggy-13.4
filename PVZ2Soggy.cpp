@@ -159,8 +159,10 @@ static long hkDispatch(uintptr_t a1, uintptr_t a2,
 
 static constexpr uintptr_t BOARD_STATE_PLAYING = 1;
 
-// Offset extra hacia la izquierda (px). Negativo = más a la izquierda.
-static constexpr int EXTRA_LEFT_OFFSET = -20;
+// Offset extra hacia la izquierda (px). POSITIVO = más pan target a la izquierda
+// (porque pantalla = mundo - b17; b17 positivo => cámara se mueve a la izquierda).
+// Ajusta este valor según necesites (ej: 200-400).
+static constexpr int EXTRA_LEFT_PAN = 300;
 
 // Aplica la corrección de cámara full-lawn al board.
 // SOLO establece los objetivos de pan (b270, b284, b285, b280).
@@ -173,24 +175,31 @@ static void ApplyFullLawnCamera(uintptr_t board) {
     // Escala (b280): igual que el hook post-BoardZoom2 de Soggylib 9.6.1.
     *(float*)(board + BOARD_280) = 1.0f;
 
-    // b283 = offset de alineación en PX, NEGATIVO (ApplyZoom escribe
-    //   b283 = escala * (-propiedadA) con propiedadA > 0; ver sub_1528B9C).
-    // -b283 = px que hay que desplazar el tablero a la IZQUIERDA para que su
-    //   borde izquierdo quede en x=0 de pantalla (left-align). Es el mismo
-    //   objetivo que el juego usa internamente (caso dir0 de la tabla de
-    //   direcciones sub_144ACF0 = mostrar la parte derecha del césped).
+    // b283 = offset de alineación en PX.
+    // En vanilla PLAYING, ApplyZoom lo pone en 0 (centrado).
+    // Para full lawn left-align: necesitamos b283 NEGATIVO para que -b283 sea POSITIVO.
+    // Forzamos b283 a un valor negativo grande (lawn width approx - screen width).
+    // Luego los pan targets usan -b283 + EXTRA_LEFT_PAN.
     int b283 = *(int*)(board + BOARD_283);
     int b286 = *(int*)(board + BOARD_286);
 
-    // Objetivos de pan en reposo (mismas fórmulas que Soggylib 9.6.1
-    // hkBoardLayout y el módulo de vista de lzt, ya validadas en 9.6.1/9.8.1):
-    //   b270 = b284 = -b283  (en vanilla b284 = b270 = 0 => franja izquierda)
-    //   b285 = (b283+b286)/2 (pan de selección de tarjetas centrado)
-    // Añadimos EXTRA_LEFT_OFFSET a los objetivos para mover más a la izquierda.
-    int targetPan = -b283 + EXTRA_LEFT_OFFSET;
+    // Si b283 es 0 o positivo (vanilla), forzar a negativo para left-align.
+    // b286 = lawnWidth - viewWidth (aprox). Usamos b286 como referencia.
+    if (b283 >= 0) {
+        // Estimamos: left-align requiere -b283 ≈ b286 (ancho excedente del césped)
+        // Pero limitamos a un valor razonable.
+        int desired_b283 = -b286;
+        if (desired_b283 > -50) desired_b283 = -250; // fallback
+        *(int*)(board + BOARD_283) = desired_b283;
+        b283 = desired_b283;
+    }
+
+    // Objetivos de pan en reposo: b270 = b284 = -b283 + extra
+    // -b283 es POSITIVO (left-align), EXTRA_LEFT_PAN añade más margen izquierdo.
+    int targetPan = -b283 + EXTRA_LEFT_PAN;
     *(int*)(board + BOARD_270) = targetPan;
     *(int*)(board + BOARD_284) = targetPan;
-    *(int*)(board + BOARD_285) = (b283 + b286) / 2 + EXTRA_LEFT_OFFSET;
+    *(int*)(board + BOARD_285) = (b283 + b286) / 2 + EXTRA_LEFT_PAN;
 
     // NOTA: No escribimos BOARD_CAM_RENDER_X (b17) aquí.
     // El juego anima b17 hacia b270/b284 via sub_11E492C/sub_144ACF0.
@@ -198,17 +207,19 @@ static void ApplyFullLawnCamera(uintptr_t board) {
 }
 
 // Igual que el .so original: BoardChangeState solo loguea y reenvía.
-// También aplicamos los objetivos de pan aquí para que estén listos
-// antes de que empiece la animación de entrada a la partida.
+// Llamamos al original PRIMERO (que ejecuta ApplyZoom y recalcula b283/b286),
+// luego SOBREESCRIBIMOS los objetivos de pan con nuestra corrección.
 static long hkBoardChangeState(uintptr_t board, uintptr_t newState) {
     LOGI("=== BoardChangeState board=%p state=%lu ===",
          (void*)board, (unsigned long)newState);
+
+    long result = oBoardChangeState ? oBoardChangeState(board, newState) : 0;
 
     if (getHighView()) {
         ApplyFullLawnCamera(board);
     }
 
-    return oBoardChangeState ? oBoardChangeState(board, newState) : 0;
+    return result;
 }
 
 static long hkBoardRender(uintptr_t board, uintptr_t a2) {
@@ -216,6 +227,8 @@ static long hkBoardRender(uintptr_t board, uintptr_t a2) {
         return oBoardRender ? oBoardRender(board, a2) : 0;
     }
 
+    // Aplicar corrección ANTES del original para que la lógica de render
+    // y animación de cámara de este frame use nuestros objetivos corregidos.
     ApplyFullLawnCamera(board);
 
     return oBoardRender ? oBoardRender(board, a2) : 0;
